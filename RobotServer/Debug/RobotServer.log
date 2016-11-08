@@ -1,0 +1,4 @@
+﻿  RobotServer.cpp
+c:\users\lpadron\desktop\cnt\robotserver\robotserver\robotserver.cpp(31): warning C4101: 'iSendResult': unreferenced local variable
+  RobotServer.vcxproj -> C:\Users\lpadron\Desktop\CNT\RobotServer\Debug\RobotServer.exe
+  RobotServer.vcxproj -> C:\Users\lpadron\Desktop\CNT\RobotServer\Debug\RobotServer.pdb (Full PDB)
