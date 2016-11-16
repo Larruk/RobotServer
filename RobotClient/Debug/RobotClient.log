@@ -1,4 +1,4 @@
 ﻿  RobotClient.cpp
-c:\users\lpadron\desktop\cnt\robotserver\robotclient\robotclient.cpp(32): warning C4101: 'recvbuf': unreferenced local variable
-  RobotClient.vcxproj -> C:\Users\lpadron\Desktop\CNT\RobotServer\Debug\RobotClient.exe
-  RobotClient.vcxproj -> C:\Users\lpadron\Desktop\CNT\RobotServer\Debug\RobotClient.pdb (Full PDB)
+c:\users\lpadron\source\repos\robotserver\robotclient\robotclient.cpp(32): warning C4101: 'recvbuf': unreferenced local variable
+  RobotClient.vcxproj -> C:\Users\lpadron\Source\Repos\RobotServer\Debug\RobotClient.exe
+  RobotClient.vcxproj -> C:\Users\lpadron\Source\Repos\RobotServer\Debug\RobotClient.pdb (Full PDB)

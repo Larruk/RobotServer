@@ -95,9 +95,8 @@ int __cdecl main(int argc, char **argv)
 		std::cin.getline(command, DEFAULT_BUFLEN);
 		int sendLength = (int)strlen(command);
 		iResult = send(ConnectSocket, command, sendLength, 0);
-		std::cin.clear();
 	// End on escape key press
-	} while (getchar() != 27);
+	} while (true);
 
 	// shutdown the connection since no more data will be sent
 	iResult = shutdown(ConnectSocket, SD_SEND);

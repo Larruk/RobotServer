@@ -9,6 +9,9 @@
 #include <ws2tcpip.h>
 #include <stdlib.h>
 #include <stdio.h>
+#include <vector>
+#include <iostream>
+#include <sstream>
 
 // Need to link with Ws2_32.lib
 #pragma comment (lib, "Ws2_32.lib")
@@ -16,6 +19,10 @@
 
 #define DEFAULT_BUFLEN 512
 #define DEFAULT_PORT "8080"
+
+using namespace std;
+
+vector<string> split(const string &s, char delim);
 
 int __cdecl main(void)
 {
@@ -96,24 +103,25 @@ int __cdecl main(void)
 	closesocket(ListenSocket);
 
 	printf("Connection opened...\n");
+	int msgLength;
 
+	// CORE FUNCTION OF SERVER
 	// Receive until the peer shuts down the connection
 	do {
 		// Get the size of the message received
-		iResult = recv(ClientSocket, recvbuf, recvbuflen, 0);
-		if (iResult > 0) {
-			printf("%.*s\n", iResult, recvbuf);
+		msgLength = recv(ClientSocket, recvbuf, recvbuflen, 0);
+		if (msgLength > 0) {
+			vector<char> charResult;
+			for (int i = 0; i < msgLength; i++) {
+				charResult.push_back(recvbuf[i]);
+			}
 
-			// Echo the buffer back to the sender
-			/*iSendResult = send(ClientSocket, "Success!", iResult, 0);
-			if (iSendResult == SOCKET_ERROR) {
-				printf("send failed with error: %d\n", WSAGetLastError());
-				closesocket(ClientSocket);
-				WSACleanup();
-				return 1;
-			}*/
+			// Result!
+			string result(charResult.begin(), charResult.end());
+			vector<string> commandVector = split(result, '|');
+			cout << commandVector.at(0) << " : " << commandVector.at(1) << endl;
 		}
-		else if (iResult == 0)
+		else if (msgLength == 0)
 			printf("\t\tConnection closing...\n");
 		else {
 			printf("recv failed with error: %d\n", WSAGetLastError());
@@ -122,7 +130,7 @@ int __cdecl main(void)
 			return 1;
 		}
 
-	} while (iResult > 0);
+	} while (msgLength > 0);
 
 	// shutdown the connection since we're done
 	iResult = shutdown(ClientSocket, SD_SEND);
@@ -138,4 +146,14 @@ int __cdecl main(void)
 	WSACleanup();
 
 	return 0;
+}
+
+vector<string> split(const string &s, char delim) {
+	stringstream ss(s);
+	string item;
+	vector<string> tokens;
+	while (getline(ss, item, delim)) {
+		tokens.push_back(item);
+	}
+	return tokens;
 }
